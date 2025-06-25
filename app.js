@@ -10,7 +10,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-const ExpressError = require("./utils/ExpressError.js");
+const ExpressError = require("./utils/expressError.js");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
@@ -86,7 +86,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req,res,next)=>{
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
-    res.locals.currUser = req.user;
+    res.locals.currUser = req.user ; 
     next();
 });
 
@@ -115,7 +115,7 @@ app.use((err,req,res,next) => {
 });
 
 app.listen(8080, ()=> {
-    console.log("server is listening");
+    console.log("server is listening to 8080");
 });
 
 
