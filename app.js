@@ -34,8 +34,21 @@ main()
         console.log(err);
     });
 
+// async function main() {
+//     await mongoose.connect(dbUrl,);
+// }
+
 async function main() {
-    await mongoose.connect(dbUrl);
+    await mongoose.connect(dbUrl, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        serverSelectionTimeoutMS: 10000,
+        ssl: true,
+        serverSelectionTimeoutMS: 10000,
+        connectTimeoutMS: 10000,
+        tlsAllowInvalidCertificates: false,
+        compressors: ['none'],
+    });
 }
 
 app.set("view engine","ejs");
@@ -54,7 +67,8 @@ const store = MongoStore.create({
     },
     touchAfter: 24*60*60,
 })
-store.on("error", ()=>{
+
+store.on("error", (err)=>{
     console.log("ERROR in MONGO SESSION STORE",err);
 })
 
